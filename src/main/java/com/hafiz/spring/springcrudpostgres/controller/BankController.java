@@ -1,7 +1,11 @@
 package com.hafiz.spring.springcrudpostgres.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,5 +41,24 @@ public class BankController {
 		// This returns a JSON or XML with the banks
 		return bankRepository.findAll();
 	}		
+	
+	
+	@GetMapping(path="/allj")
+	public String getAllBankswithJasper(Model model) {
+		
+		Iterable<Bank> bankList = bankRepository.findAll();
+
+		List<Bank> list = new ArrayList<Bank>();
+		for (Bank s : bankList) {			
+			list.add(s);
+	    }
+		
+
+		model.addAttribute("merchantName", "Toko Mudah Barokah");
+		model.addAttribute("banks", list);
+
+		return "bank";
+		
+	}	
 	
 }
